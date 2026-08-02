@@ -31,8 +31,8 @@ function PrivacyContent() {
       <section>
         <h2>Information collected</h2>
         <p>
-          When you submit the contact form, CargoFish collects the information you provide: full name, email address,
-          optional organization, optional role/title, inquiry type, message, and consent confirmation.
+          When you use the contact form, the site opens a prepared email in your email app. CargoFish receives the
+          information only if you send that email.
         </p>
       </section>
 
@@ -47,8 +47,8 @@ function PrivacyContent() {
       <section>
         <h2>Email delivery</h2>
         <p>
-          Contact-form submissions are sent by email through Resend when configured. Resend processes the message for
-          transactional email delivery. Resend does not create a normal business inbox for CargoFish.
+          The current contact flow uses a direct email link to CargoFish. The website does not send contact-form
+          submissions through a third-party transactional email provider in the current implementation.
         </p>
       </section>
 

@@ -3,7 +3,7 @@ import { siteContent } from "../../content/siteContent";
 import { selectInquiryAndScroll } from "../../lib/inquiryEvents";
 
 export function Hero() {
-  const hasDemoVideo = Boolean(siteContent.demoVideo.url);
+  const hasDemoVideo = Boolean(siteContent.demoVideo.embedUrl || siteContent.demoVideo.url);
 
   return (
     <section id="home" className="bg-black pt-32 text-white sm:pt-36">

@@ -11,7 +11,7 @@ const companyLinks = [
 const technologyLinks = [
   { label: "How It Works", href: "/#technology" },
   { label: "Benefits", href: "/#benefits" },
-  ...(siteContent.demoVideo.url ? [{ label: "Demo Video", href: "/#demo" }] : []),
+  ...(siteContent.demoVideo.embedUrl || siteContent.demoVideo.url ? [{ label: "Demo Video", href: "/#demo" }] : []),
 ];
 
 const legalLinks = [

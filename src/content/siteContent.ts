@@ -13,9 +13,9 @@ export const siteContent = {
   companyName: "CargoFish LLC",
   brandName: "CargoFish",
   tagline: "The Physical Internet",
-  siteUrl: "https://www.cargofish.com",
+  siteUrl: import.meta.env.VITE_SITE_URL || "https://www.cargofish.com",
   contact: {
-    email: "info@cargofish.com",
+    email: "contact.cargofish@gmail.com",
     location: "New Jersey, USA",
     socialLinks: [],
   },
@@ -183,12 +183,13 @@ export const siteContent = {
   },
   demoVideo: {
     title: "CargoFish demonstration video",
-    url: import.meta.env.VITE_DEMO_VIDEO_URL || "",
-    posterUrl: import.meta.env.VITE_DEMO_VIDEO_POSTER_URL || "",
+    embedUrl: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7361406325236346880?compact=1",
+    url: "",
+    posterUrl: "",
     captionsUrl: "",
-    fallbackHeading: "Demonstration video coming soon",
+    fallbackHeading: "Demonstration video unavailable",
     fallbackBody:
-      "CargoFish can publish an MP4 or WebM demo here once a production video URL, poster, and optional captions are supplied.",
+      "CargoFish can publish a direct MP4 or WebM demo here if the LinkedIn embed becomes unavailable.",
   },
   conferenceShowcase: {
     eyebrow: "Conference media",
@@ -202,7 +203,7 @@ export const siteContent = {
       title: "CargoFish system diagram",
       alt:
         "CargoFish conference diagram showing the underground delivery utility concept and vehicle movement through enclosed infrastructure.",
-      url: import.meta.env.VITE_CONFERENCE_DIAGRAM_URL || "",
+      url: "",
       fallbackBody:
         "Add the conference diagram or system schematic here once the final image is supplied.",
     },
@@ -210,16 +211,18 @@ export const siteContent = {
       {
         title: "Conference demonstration video",
         label: "Primary conference clip",
-        url: import.meta.env.VITE_CONFERENCE_VIDEO_1_URL || "",
-        posterUrl: import.meta.env.VITE_CONFERENCE_VIDEO_1_POSTER_URL || "",
-        captionsUrl: import.meta.env.VITE_CONFERENCE_VIDEO_1_CAPTIONS_URL || "",
+        embedUrl: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7328832192959123457?compact=1",
+        url: "",
+        posterUrl: "",
+        captionsUrl: "",
       },
       {
         title: "Additional conference video",
         label: "Supplemental clip",
-        url: import.meta.env.VITE_CONFERENCE_VIDEO_2_URL || "",
-        posterUrl: import.meta.env.VITE_CONFERENCE_VIDEO_2_POSTER_URL || "",
-        captionsUrl: import.meta.env.VITE_CONFERENCE_VIDEO_2_CAPTIONS_URL || "",
+        embedUrl: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7331798421789372416?compact=1",
+        url: "",
+        posterUrl: "",
+        captionsUrl: "",
       },
     ],
   },

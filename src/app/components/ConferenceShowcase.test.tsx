@@ -3,11 +3,42 @@ import { describe, expect, it } from "vitest";
 import { ConferenceShowcase } from "./ConferenceShowcase";
 
 describe("ConferenceShowcase", () => {
-  it("renders diagram and conference video fallback states when media is not configured", () => {
+  it("does not render empty media placeholders when media is not configured", () => {
+    const { container } = render(
+      <ConferenceShowcase
+        config={{
+          eyebrow: "Conference media",
+          title: "Conference materials",
+          description: "Conference media description.",
+          eventName: "NYC Fleet Show",
+          date: "May 15, 2025",
+          location: "Queens, New York",
+          diagram: {
+            title: "CargoFish diagram",
+            alt: "CargoFish system diagram",
+            url: "",
+            fallbackBody: "Diagram fallback",
+          },
+          videos: [],
+        }}
+      />,
+    );
+
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("renders configured LinkedIn conference embeds", () => {
     render(<ConferenceShowcase />);
 
-    expect(screen.getByText("Diagram ready")).toBeInTheDocument();
-    expect(screen.getAllByText("Conference video slot ready")).toHaveLength(2);
+    expect(screen.getByTitle("Conference demonstration video")).toHaveAttribute(
+      "src",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7328832192959123457?compact=1",
+    );
+    expect(screen.getByTitle("Additional conference video")).toHaveAttribute(
+      "src",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7331798421789372416?compact=1",
+    );
+    expect(screen.queryByText("Diagram ready")).not.toBeInTheDocument();
   });
 
   it("renders configured diagram and native video controls", () => {
@@ -30,6 +61,7 @@ describe("ConferenceShowcase", () => {
             {
               title: "Conference clip",
               label: "Primary clip",
+              embedUrl: "",
               url: "/media/conference-clip.mp4",
               posterUrl: "/media/conference-clip.jpg",
               captionsUrl: "/media/conference-clip.vtt",

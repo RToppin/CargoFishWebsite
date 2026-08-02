@@ -18,7 +18,9 @@ function getVideoType(url: string) {
 
 export function DemoVideo({ config = siteContent.demoVideo }: { config?: DemoVideoConfig }) {
   const video = config;
-  const hasVideo = Boolean(video.url);
+  const hasEmbed = Boolean(video.embedUrl);
+  const hasNativeVideo = Boolean(video.url);
+  const hasMedia = hasEmbed || hasNativeVideo;
 
   return (
     <section id="demo" className="bg-white py-20">
@@ -26,12 +28,21 @@ export function DemoVideo({ config = siteContent.demoVideo }: { config?: DemoVid
         <SectionHeading
           eyebrow="Demonstration"
           title="See CargoFish in action"
-          description="The site is ready for a native MP4 or WebM demonstration video once the production file is supplied."
+          description="Watch the main CargoFish demonstration from the company's public LinkedIn update."
         />
 
         <div className="mx-auto max-w-5xl">
-          <div className="aspect-video overflow-hidden border-4 border-black bg-black">
-            {hasVideo ? (
+          <div className="aspect-[504/399] overflow-hidden border-4 border-black bg-black">
+            {hasEmbed ? (
+              <iframe
+                src={video.embedUrl}
+                title={video.title}
+                className="h-full w-full"
+                loading="lazy"
+                allow="fullscreen"
+                allowFullScreen
+              />
+            ) : hasNativeVideo ? (
               <video
                 className="h-full w-full bg-black object-contain"
                 controls
@@ -46,7 +57,7 @@ export function DemoVideo({ config = siteContent.demoVideo }: { config?: DemoVid
                 ) : null}
                 Your browser does not support HTML5 video. You can open the demonstration video at {video.url}.
               </video>
-            ) : (
+            ) : hasMedia ? null : (
               <div className="flex h-full items-center justify-center bg-zinc-950 px-6 text-center">
                 <div className="max-w-xl">
                   <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center border-2 border-white bg-[#C93A3A] text-white">

@@ -30,10 +30,10 @@ function getRoute(): Route {
 
 export default function App() {
   const [route, setRoute] = useState<Route>(getRoute);
-  const hasDemoVideo = Boolean(siteContent.demoVideo.url);
+  const hasDemoVideo = Boolean(siteContent.demoVideo.embedUrl || siteContent.demoVideo.url);
   const hasConferenceMedia =
     Boolean(siteContent.conferenceShowcase.diagram.url) ||
-    siteContent.conferenceShowcase.videos.some((video) => Boolean(video.url));
+    siteContent.conferenceShowcase.videos.some((video) => Boolean(video.embedUrl || video.url));
 
   useEffect(() => {
     const onRouteChange = () => setRoute(getRoute());

@@ -13,61 +13,49 @@ function fillRequiredFields() {
 
 describe("Contact", () => {
   afterEach(() => {
+    vi.restoreAllMocks();
     vi.unstubAllGlobals();
   });
 
   it("shows field-specific validation errors before submitting", () => {
-    const fetchMock = vi.fn();
-    vi.stubGlobal("fetch", fetchMock);
+    const clickMock = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
 
     render(<Contact />);
 
-    fireEvent.click(screen.getByRole("button", { name: /send message/i }));
+    fireEvent.click(screen.getByRole("button", { name: /open email/i }));
 
     expect(screen.getByText("Enter your full name.")).toBeInTheDocument();
     expect(screen.getByText("Enter a valid email address.")).toBeInTheDocument();
     expect(screen.getByText("Enter a message with at least 10 characters.")).toBeInTheDocument();
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(clickMock).not.toHaveBeenCalled();
   });
 
-  it("renders a success state only after the server confirms acceptance", async () => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({ ok: true }),
-      }),
-    );
+  it("opens a prepared email and resets the form after validation passes", async () => {
+    const clickMock = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
 
     render(<Contact />);
     fillRequiredFields();
     fireEvent.change(screen.getByLabelText(/inquiry type/i), { target: { value: "investor" } });
-    fireEvent.click(screen.getByRole("button", { name: /send message/i }));
+    fireEvent.click(screen.getByRole("button", { name: /open email/i }));
 
-    expect(await screen.findByText(/CargoFish received your inquiry/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Your email app should open/i)).toBeInTheDocument();
+    expect(clickMock).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(screen.getByLabelText(/full name/i)).toHaveValue(""));
   });
 
-  it("renders a direct email fallback when delivery fails", async () => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue({
-        ok: false,
-        json: async () => ({
-          ok: false,
-          message: "Contact delivery failed. Please email info@cargofish.com directly.",
-        }),
-      }),
-    );
+  it("renders a direct email fallback when an email client cannot be opened", async () => {
+    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {
+      throw new Error("Navigation blocked");
+    });
 
     render(<Contact />);
     fillRequiredFields();
-    fireEvent.click(screen.getByRole("button", { name: /send message/i }));
+    fireEvent.click(screen.getByRole("button", { name: /open email/i }));
 
-    expect(await screen.findByText(/Contact delivery failed/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Email info@cargofish.com/i })).toHaveAttribute(
+    expect(await screen.findByText(/Your email app could not be opened/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Email contact.cargofish@gmail.com/i })).toHaveAttribute(
       "href",
-      expect.stringContaining("mailto:info@cargofish.com"),
+      expect.stringContaining("mailto:contact.cargofish@gmail.com"),
     );
   });
 });

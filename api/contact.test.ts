@@ -85,6 +85,6 @@ describe("contact api", () => {
     );
 
     expect(res.statusCode).toBe(503);
-    expect(res.body).toMatchObject({ ok: false, fallbackEmail: "info@cargofish.com" });
+    expect(res.body).toMatchObject({ ok: false, fallbackEmail: "contact.cargofish@gmail.com" });
   });
 });

@@ -13,7 +13,7 @@ type VercelResponse = {
   json(body: unknown): void;
 };
 
-const fallbackEmail = "info@cargofish.com";
+const fallbackEmail = "contact.cargofish@gmail.com";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Cache-Control", "no-store");
