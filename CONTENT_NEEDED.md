@@ -1,20 +1,23 @@
-# CargoFish Content Needed
+# CargoFish Content Notes
 
-The website no longer displays invented values for missing company information. Please confirm or supply the items below before launch.
+The website no longer displays invented values for missing company information.
+Anything without confirmed content should stay hidden until CargoFish explicitly asks for it back.
 
-## Required For Production
+## Ready For Current Launch
 
-- Final production domain for canonical URLs, `robots.txt`, and `sitemap.xml`.
-- Final conference diagram or system schematic from the NYC Fleet Show materials.
+- Public contact email: `contact.cargofish@gmail.com`.
+- Contact form delivery: Resend via `RESEND_API_KEY`.
+- Main demo video: LinkedIn embed in `src/content/siteContent.ts`.
+- NYC Fleet Show videos: LinkedIn embeds in `src/content/siteContent.ts`.
 
-## Company Information To Confirm
+## Optional Later
 
+- Custom production domain, if CargoFish uses something other than `https://www.cargofish.com`.
+- Conference diagram or system schematic from NYC Fleet Show materials.
 - Confirmed social-media profile URLs, if CargoFish wants social links displayed.
 - Real team member names, biographies, roles, and headshots.
-- Any company statistics, estimates, or technical claims that should be independently confirmed before publication.
 - Final wording for the investor disclaimer, Privacy Policy, and Terms after legal review.
-- Whether `contact.cargofish@gmail.com` remains the preferred public contact email.
-- Whether CargoFish wants server-side form delivery through Resend later.
+- Verified Resend sender domain/subdomain for stronger production email deliverability.
 
 ## Removed Instead Of Invented
 
@@ -23,3 +26,5 @@ The website no longer displays invented values for missing company information. 
 - Generic team section.
 - Cookie policy link, because the site currently has no analytics, advertising pixels, or nonessential cookies.
 - Patent, customer, deployment, or financial-return claims not supported by the supplied materials.
+- Visible milestones section until CargoFish asks for it back.
+- Empty conference diagram placeholder until a real diagram is supplied.

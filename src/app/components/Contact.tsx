@@ -1,4 +1,4 @@
-import { FormEvent, type ReactNode, useEffect, useMemo, useState } from "react";
+import { FormEvent, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
 import { inquiryTypes, siteContent, type InquiryType } from "../../content/siteContent";
 import { onInquirySelected } from "../../lib/inquiryEvents";
@@ -93,7 +93,9 @@ function fieldErrorId(field: FieldName) {
 export function Contact() {
   const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const pendingSignatureRef = useRef<string | null>(null);
 
   useEffect(() => {
     return onInquirySelected((inquiryType) => {
@@ -108,7 +110,7 @@ export function Contact() {
 
   const mailtoHref = useMemo(() => {
     return buildMailtoHref(values, selectedInquiryLabel);
-  }, [selectedInquiryLabel, values.fullName, values.message, values.organization, values.role]);
+  }, [selectedInquiryLabel, values.email, values.fullName, values.message, values.organization, values.role]);
 
   function setField<T extends FieldName>(field: T, value: FormValues[T]) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -117,6 +119,10 @@ export function Contact() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
 
     const clientErrors = validateForm(values);
     setErrors(clientErrors);
@@ -135,19 +141,50 @@ export function Contact() {
       role: normalize(values.role),
       message: values.message.trim(),
     };
+    const signature = JSON.stringify(payload);
+
+    if (pendingSignatureRef.current === signature) {
+      return;
+    }
+
+    pendingSignatureRef.current = signature;
+    setIsSubmitting(true);
 
     try {
-      openMailClient(buildMailtoHref(payload, selectedInquiryLabel));
-      setValues(initialValues);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => null);
+
+      if (response.ok && data?.ok === true) {
+        setValues(initialValues);
+        setStatus({
+          type: "success",
+          message: `Thanks. CargoFish received your inquiry and will respond using the email you provided.`,
+        });
+        return;
+      }
+
+      if (data?.errors && typeof data.errors === "object") {
+        setErrors(data.errors);
+      }
+
       setStatus({
-        type: "success",
-        message: `Your email app should open with a prepared message to ${siteContent.contact.email}. Send it there to complete your inquiry.`,
+        type: "error",
+        message:
+          data?.message ||
+          `The message could not be delivered right now. You can email ${siteContent.contact.email} directly.`,
       });
     } catch {
       setStatus({
         type: "error",
-        message: `Your email app could not be opened. You can email ${siteContent.contact.email} directly.`,
+        message: `The message could not be delivered right now. You can email ${siteContent.contact.email} directly.`,
       });
+    } finally {
+      pendingSignatureRef.current = null;
+      setIsSubmitting(false);
     }
   }
 
@@ -370,10 +407,11 @@ export function Contact() {
 
             <button
               type="submit"
-              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 border-2 border-[#C93A3A] bg-[#C93A3A] px-6 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#AB2D2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C93A3A]"
+              disabled={isSubmitting}
+              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 border-2 border-[#C93A3A] bg-[#C93A3A] px-6 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-[#AB2D2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C93A3A] disabled:cursor-not-allowed disabled:opacity-70"
             >
               <Send aria-hidden="true" size={19} />
-              Open Email
+              {isSubmitting ? "Sending..." : "Send Message"}
             </button>
           </form>
         </div>
@@ -393,15 +431,6 @@ function buildMailtoHref(values: Pick<FormValues, "fullName" | "email" | "organi
   );
 
   return `mailto:${siteContent.contact.email}?subject=${subject}&body=${body}`;
-}
-
-function openMailClient(href: string) {
-  const link = document.createElement("a");
-  link.href = href;
-  link.target = "_self";
-  document.body.append(link);
-  link.click();
-  link.remove();
 }
 
 function FormField({

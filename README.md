@@ -2,15 +2,15 @@
 
 Production-ready React, TypeScript, Vite, and Tailwind site for CargoFish LLC.
 
-The site includes a responsive company information page, LinkedIn video embeds, a direct-email contact flow, legal draft views, SEO files, and Vercel security headers.
+The site includes a responsive company information page, LinkedIn video embeds, a Resend-backed contact form, legal draft views, SEO files, and Vercel security headers.
 
 ## Stack
 
 - React 18 + TypeScript
 - Vite
 - Tailwind CSS
-- Vercel static hosting
-- Optional Resend/Vercel contact API retained for future server-side email delivery
+- Vercel static hosting and serverless functions
+- Resend for contact-form email delivery
 
 ## Local Setup
 
@@ -20,7 +20,7 @@ Install dependencies:
 npm install
 ```
 
-Optional: copy the environment placeholder file if you want local notes for future settings:
+Copy the environment placeholder file if you want to test the contact API locally:
 
 ```bash
 cp .env.example .env.local
@@ -46,28 +46,31 @@ npm run dev
 
 ## Environment Variables
 
-No environment variables are required for the current public launch. The contact form opens a prepared email to
-`contact.cargofish@gmail.com`, and the demo/conference videos are embedded directly from LinkedIn in
-`src/content/siteContent.ts`.
-
-Optional future values are documented in `.env.example`:
+Set these in Vercel Project Settings. Only `RESEND_API_KEY` is required for the current contact form; the email
+receiver defaults to `contact.cargofish@gmail.com`.
 
 ```bash
+RESEND_API_KEY=
+# CONTACT_TO_EMAIL=contact.cargofish@gmail.com
+# CONTACT_FROM_EMAIL=website@send.cargofish.com
 VITE_SITE_URL=
-# RESEND_API_KEY=
-# CONTACT_TO_EMAIL=
-# CONTACT_FROM_EMAIL=
 ```
 
+- `RESEND_API_KEY`: required Resend API key used only by `api/contact.ts`.
+- `CONTACT_TO_EMAIL`: optional override for the inbox that receives form notifications. Defaults to `contact.cargofish@gmail.com`.
+- `CONTACT_FROM_EMAIL`: optional sender override. Defaults to `CargoFish Website <onboarding@resend.dev>`.
 - `VITE_SITE_URL`: optional production URL override used for canonical and social metadata.
-- `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, and `CONTACT_FROM_EMAIL`: optional future Resend values if the form is switched back to server-side email delivery.
 
 Never expose a real `RESEND_API_KEY` in browser code.
 
-## Contact Email
+## Contact Email With Resend
 
-The current contact form validates the entered fields, then opens the visitor's email app with a prepared message to
-`contact.cargofish@gmail.com`. No Resend account or Vercel email environment variables are needed for this launch.
+The contact form validates the entered fields, posts to `/api/contact`, and sends the inquiry through Resend to
+`contact.cargofish@gmail.com`. If delivery fails, the user gets a direct `mailto:` fallback.
+
+Resend requires a sender address on every email. The code currently defaults to `CargoFish Website <onboarding@resend.dev>`,
+which matches Resend's sample sender. For stronger production deliverability later, verify a domain or subdomain in
+Resend and set `CONTACT_FROM_EMAIL`, for example `website@send.cargofish.com`.
 
 ## Demo Video
 
@@ -96,7 +99,9 @@ npm run build
 Manual checks before launch:
 
 - Test the form with invalid fields.
-- Test the form opens a prepared email to `contact.cargofish@gmail.com`.
+- Test the form with `RESEND_API_KEY` configured.
+- Test the form with `RESEND_API_KEY` removed to confirm the fallback error state.
+- Confirm `/api/contact` rejects non-POST requests.
 - Confirm `/privacy` and `/terms` render.
 - Check the layout at 375px, 768px, and 1440px.
 - Confirm no Lorem Ipsum, fake phone number, `href="#"`, `figma:asset`, or `noindex` remains.
@@ -104,14 +109,15 @@ Manual checks before launch:
 
 ## Spam And Abuse Protection
 
-The current direct-email contact flow includes:
+The contact flow includes:
 
 - Hidden honeypot field.
-- Browser validation before opening the prepared email.
+- Browser and server validation.
 - Maximum field lengths.
+- JSON content-type enforcement.
 - No file uploads.
 
-If the server-side contact API is re-enabled later, add persistent rate limiting through Vercel Firewall, Upstash, or another durable service.
+There is no in-memory serverless rate limiter because it would not work reliably across serverless instances. If abuse becomes a problem, add persistent rate limiting through Vercel Firewall, Upstash, or another durable service.
 
 ## Vercel Deployment
 
@@ -140,7 +146,7 @@ Deploy production:
 npx vercel --prod
 ```
 
-Add environment variables in Vercel Project Settings before testing the contact form in production.
+Add `RESEND_API_KEY` in Vercel Project Settings before testing the contact form in production.
 
 To view function logs safely, use the Vercel dashboard or:
 
@@ -152,12 +158,8 @@ Do not log complete contact messages or sensitive personal information.
 
 ## Custom Domain On Vercel
 
-1. Open the Vercel project.
-2. Go to Settings, then Domains.
-3. Add the existing CargoFish production domain.
-4. Follow Vercel's DNS instructions for the domain host.
-5. Confirm the production domain in `CONTENT_NEEDED.md`.
-6. Update `public/robots.txt`, `public/sitemap.xml`, and `src/content/siteContent.ts` if the final domain is not `https://www.cargofish.com`.
+This is optional. The site defaults to `https://www.cargofish.com` for canonical metadata and SEO files. If CargoFish
+uses a different final domain later, update `VITE_SITE_URL`, `public/robots.txt`, and `public/sitemap.xml`.
 
 ## Content Handoff
 

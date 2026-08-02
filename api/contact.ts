@@ -14,6 +14,7 @@ type VercelResponse = {
 };
 
 const fallbackEmail = "contact.cargofish@gmail.com";
+const defaultFromEmail = "CargoFish Website <onboarding@resend.dev>";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Cache-Control", "no-store");
@@ -40,10 +41,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const resendApiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL;
-  const fromEmail = process.env.CONTACT_FROM_EMAIL;
+  const toEmail = process.env.CONTACT_TO_EMAIL || fallbackEmail;
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || defaultFromEmail;
 
-  if (!resendApiKey || !toEmail || !fromEmail) {
+  if (!resendApiKey) {
     return res.status(503).json({
       ok: false,
       message: `Contact delivery is not configured yet. Please email ${fallbackEmail} directly.`,
