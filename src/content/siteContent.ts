@@ -12,7 +12,7 @@ export type InquiryType = (typeof inquiryTypes)[number]["value"];
 export const siteContent = {
   companyName: "CargoFish LLC",
   brandName: "CargoFish",
-  tagline: "The Physical Internet",
+  tagline: "Move What Matters",
   siteUrl: import.meta.env.VITE_SITE_URL || "https://www.cargofish.com",
   contact: {
     email: "contact.cargofish@gmail.com",
@@ -20,20 +20,20 @@ export const siteContent = {
     socialLinks: [],
   },
   seo: {
-    title: "CargoFish LLC | The Physical Internet",
+    title: "CargoFish LLC | Move What Matters",
     description:
       "CargoFish is developing an underground delivery utility for moving consumer packaged goods through automated infrastructure.",
   },
   hero: {
     eyebrow: "CargoFish LLC",
-    headline: "The Physical Internet",
+    headline: "Move What Matters",
     description:
       "CargoFish is developing an underground delivery utility for moving consumer packaged goods through automated, pipe-based infrastructure.",
-    kicker: "Move Only What Matters!",
+    kicker: "Fully electric rail delivery",
   },
   mission: [
-    "CargoFish envisions a day when delivery inefficiencies can be reduced through a new kind of utility: an underground physical internet for everyday goods.",
-    "The concept is modeled on how information moves instantly across digital networks. CargoFish applies that utility mindset to physical products by moving packages through enclosed underground pathways.",
+    "CargoFish is developing a utility-style delivery system that moves everyday goods through underground pipe networks, reducing the friction, vehicle miles, and repeated surface trips built into today's delivery model.",
+    "The concept is comparable to pneumatic tube systems used in hospitals and banks, expanded to a larger, computer-controlled network with greater routing flexibility, payload handling, and destination management.",
   ],
   problem: {
     intro:
@@ -77,23 +77,24 @@ export const siteContent = {
   },
   technology: {
     summary:
-      "CargoFish is described in the supplied material as a miniature subway-like system using cylinder-shaped tunnels with an 8-inch diameter. Vehicles move through energized rails that form an electrical circuit.",
+      "CargoFish is a miniature subway-style delivery network where multiple vehicles communicate and navigate through 8-inch pipe to reach destination nodes, unload payloads, and return to idle compartments or continue to the next pickup. Vehicles draw power from energized rails that form an electrical circuit.",
     details: [
-      "Transport vehicles are less than 4 feet long.",
-      "Each vehicle is described as holding approximately 20 pounds, similar to one grocery bag or two gallon jugs of milk.",
-      "Vehicles include a computerized component for destination entry.",
-      "Vehicles are self-propelled on energized rails within enclosed tunnels.",
+      "Transport vehicles are less than 4 feet long and sized for everyday consumer goods.",
+      "Each vehicle holds approximately 20 pounds, similar to one grocery bag or two gallon jugs of milk.",
+      "Sensors and an onboard microcontroller support routing, positioning, and destination handling.",
+      "Vehicles normally draw power from electrified rails and can use onboard drive capability through unpowered sections or rail dead spots.",
     ],
     process: [
-      "The vehicle arrives at the intended destination.",
-      "The system ejects the complete vehicle for unloading.",
-      "The recipient removes the package.",
-      "The container can be reused, returned for recycling, or loaded with a new payload.",
+      "The closest available vehicle is dispatched to the pickup location.",
+      "The payload is loaded into the vehicle.",
+      "The vehicle navigates through the pipe network to the destination node.",
+      "The payload is dropped off for recipient retrieval.",
+      "The vehicle returns to an idle compartment or continues to the next task.",
     ],
     traffic:
-      "The supplied material describes onboard switching and distributed, cooperative vehicle traffic algorithms, rather than pre-set switches or traffic signals.",
+      "Programmed microcontrollers, sensors, and communication methods manage routing, spacing, switching, and cooperative vehicle traffic across the network.",
     throughput:
-      "Company-supplied estimates state that vehicle throughput per lane-mile could exceed ordinary highway car limits and pneumatic systems. These figures require confirmation before being presented as independently verified performance.",
+      "The rail-guided network is intended to deliver high-frequency movement of lightweight payloads by keeping multiple vehicles in motion through each lane-mile. Final throughput depends on routing design, station spacing, loading cycles, and validated operating parameters.",
   },
   benefits: [
     {
@@ -119,7 +120,7 @@ export const siteContent = {
     {
       title: "Low specific energy",
       description:
-        "CargoFish estimates that lightweight vehicles on rails could use far less energy per delivery than road-based alternatives.",
+        "Lightweight rail-guided vehicles are expected to require less energy per delivery than road-based alternatives, subject to validation under real operating conditions.",
     },
     {
       title: "Reduced packaging waste",
@@ -128,10 +129,10 @@ export const siteContent = {
     },
   ],
   energyClaim: {
-    title: "electric rail delivery",
-    value: "Clean energy",
+    title: "Electrified rail delivery",
+    value: "Fully electric",
     body:
-      "CargoFish uses electric vehicles running on energized rails, eliminating onboard gasoline or diesel engines and positioning the system for clean-energy operation.",
+      "Vehicles are designed to run fully electric on energized rails inside the pipe network, with no onboard gasoline or diesel engines and no onboard tailpipe emissions. The architecture remains a concept attribute that requires validation through engineering tests and pilot operation.",
   },
   marketContext: {
     body:
@@ -195,7 +196,7 @@ export const siteContent = {
     eyebrow: "Conference media",
     title: "NYC Fleet Show demonstration materials",
     description:
-      "A dedicated place for the diagram and videos from CargoFish's public proof-of-concept demonstration at the NYC Fleet Show.",
+      "Proof-of-concept demonstration media from CargoFish's NYC Fleet Show appearance.",
     eventName: "NYC Fleet Show",
     date: "May 15, 2025",
     location: "Corona Flushing Meadows Park, Queens, New York",

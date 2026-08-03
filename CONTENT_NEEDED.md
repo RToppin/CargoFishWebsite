@@ -25,6 +25,6 @@ Anything without confirmed content should stay hidden until CargoFish explicitly
 - Placeholder social links.
 - Generic team section.
 - Cookie policy link, because the site currently has no analytics, advertising pixels, or nonessential cookies.
-- Patent, customer, deployment, or financial-return claims not supported by the supplied materials.
+- Patent, customer, deployment, or financial-return claims without confirmed support.
 - Visible milestones section until CargoFish asks for it back.
 - Empty conference diagram placeholder until a real diagram is supplied.

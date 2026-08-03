@@ -9,7 +9,7 @@ export function News() {
         <SectionHeading
           eyebrow="Milestones"
           title="Completed CargoFish updates"
-          description="These milestones are carried forward from the supplied CargoFish material and presented as historical updates."
+          description="These milestones reflect completed CargoFish updates and public demonstrations."
         />
 
         <div className="grid gap-5">

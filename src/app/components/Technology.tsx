@@ -11,7 +11,7 @@ export function Technology() {
         <SectionHeading
           eyebrow="Technology"
           title="How the system works"
-          description="The CargoFish concept combines enclosed tunnels, energized rails, and self-propelled vehicles sized for everyday consumer goods."
+          description="The CargoFish concept combines enclosed 8-inch pipes, electrified rails, sensor-driven vehicles, and coordinated routing for everyday consumer goods."
         />
 
         <div className="border-l-4 border-[#C93A3A] bg-zinc-100 p-6 sm:p-8">
@@ -56,7 +56,7 @@ export function Technology() {
             <p className="mt-4 leading-8">{siteContent.technology.traffic}</p>
           </div>
           <div className="border-2 border-black bg-white p-6 sm:p-8">
-            <h3 className="text-2xl font-black uppercase">Throughput estimates</h3>
+            <h3 className="text-2xl font-black uppercase">Network throughput</h3>
             <p className="mt-4 leading-8 text-zinc-800">{siteContent.technology.throughput}</p>
           </div>
         </div>

@@ -49,8 +49,8 @@ export function Benefits() {
               ))}
             </div>
             <p className="mt-5 leading-8 text-zinc-700">
-              CargoFish frames this as an infrastructure opportunity: once installed and heavily used, a delivery
-              utility could spread installation cost across repeated daily movement of goods.
+              This infrastructure model is intended to spread installation cost across repeated daily movement of goods
+              once installed and heavily used.
             </p>
           </div>
         </div>

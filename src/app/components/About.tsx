@@ -75,7 +75,7 @@ export function About() {
           <blockquote className="text-lg italic leading-8 text-zinc-800">"{siteContent.problem.quote}"</blockquote>
           <figcaption className="mt-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-zinc-500">
             <CheckCircle2 aria-hidden="true" size={18} />
-            Supplied CargoFish material
+            Core delivery challenge
           </figcaption>
         </figure>
       </div>
