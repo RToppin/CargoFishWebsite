@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { inquiryLabels, validateContactPayload, type ContactPayload } from "./contactValidation";
+import { inquiryLabels, validateContactPayload, type ContactPayload } from "./contactValidation.js";
 
 type VercelRequest = {
   method?: string;
