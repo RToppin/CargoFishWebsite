@@ -25,6 +25,9 @@ function getRoute(): Route {
     return "terms";
   }
 
+  if (window.location.pathname === "/about") {
+    return "home";
+  }
   return "home";
 }
 
